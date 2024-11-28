@@ -9,14 +9,10 @@ import { Checkbox } from "../ui/checkbox"
 import { Eye, EyeOff } from 'lucide-react'
 
 const formSchema = z.object({
-  firstName: z.string().min(2, { message: "First name must be at least 2 characters" }),
-  lastName: z.string().min(2, { message: "Last name must be at least 2 characters" }),
   username: z.string().min(3, { message: "Username must be at least 3 characters" }),
   email: z.string().email({ message: "Invalid email address" }),
-  phoneNumber: z.string().regex(/^\+?[1-9]\d{1,14}$/, { message: "Invalid phone number" }),
   password: z.string().min(8, { message: "Password must be at least 8 characters" }),
   confirmPassword: z.string(),
-  policyAgreed: z.boolean().refine(val => val === true, { message: "You must agree to the policy" })
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
@@ -29,14 +25,10 @@ export default function RegisterForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
       username: "",
       email: "",
-      phoneNumber: "",
       password: "",
       confirmPassword: "",
-      policyAgreed: false,
     },
   })
 
@@ -48,34 +40,6 @@ export default function RegisterForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="firstName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>First Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="John" {...field} className="bg-white/50 dark:bg-gray-800/50" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="lastName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Last Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Doe" {...field} className="bg-white/50 dark:bg-gray-800/50" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
         <FormField
           control={form.control}
           name="username"
@@ -97,19 +61,6 @@ export default function RegisterForm() {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input placeholder="john@example.com" {...field} className="bg-white/50 dark:bg-gray-800/50" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="phoneNumber"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Phone Number</FormLabel>
-              <FormControl>
-                <Input placeholder="+1234567890" {...field} className="bg-white/50 dark:bg-gray-800/50" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -176,33 +127,6 @@ export default function RegisterForm() {
                 </div>
               </FormControl>
               <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="policyAgreed"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <div className="leading-none">
-                <FormLabel>
-                  I agree to the{' '}
-                  <a href="#" className="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
-                    terms of service
-                  </a>{' '}
-                  and{' '}
-                  <a href="#" className="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
-                    privacy policy
-                  </a>
-                </FormLabel>
-                <FormMessage />
-              </div>
             </FormItem>
           )}
         />

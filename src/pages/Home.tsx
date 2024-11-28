@@ -1,27 +1,16 @@
-import { useState } from "react";
-import vlphaLogo from "/vlpha.png";
 import "../App.css";
 function Home() {
-  const [count, setCount] = useState(0);
 
   return (
     <>
       <div className="flex h-screen w-screen justify-center flex-col items-center">
-        <a href="https://www.vlpha.tech" target="_blank">
-          <img
-            src={vlphaLogo}
-            className="w-64 bg-black dark:bg-transparent rounded-full animate-logo-spin"
-            alt="Vlpha logo"
-          />
-        </a>
-        <div className="card">
-          <button
-            className="text-white bg-black p-3 px-4 mt-4 rounded-xl"
-            onClick={() => setCount((count) => count + 1)}
-          >
-            count is {count}
-          </button>
-        </div>
+        <img src="./hero.png" className="w-full h-2/3 absolute top-0 bg-black" alt="Logo" />
+        <h1 className="text-4xl font-bold text-center text-gray-800 dark:text-white">
+          Welcome to Vlpha
+        </h1>
+        <p className="text-lg text-center text-gray-600 dark:text-gray-400">
+          A modern and responsive web application template
+        </p>
       </div>
     </>
   );
