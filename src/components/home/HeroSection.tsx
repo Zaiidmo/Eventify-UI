@@ -1,6 +1,6 @@
 import React from 'react';
 import { Play, Plus, Info } from 'lucide-react';
-import { Event } from '../types';
+import { Event } from '@/types';
 
 interface HeroSectionProps {
   event: Event;
@@ -45,11 +45,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ event }) => {
         <div className="flex gap-4">
           <button className="flex items-center gap-2 px-8 py-3 bg-white text-black rounded hover:bg-white/90 transition">
             <Play className="w-5 h-5" />
-            Watch Now
-          </button>
-          <button className="flex items-center gap-2 px-8 py-3 bg-gray-500/50 text-white rounded hover:bg-gray-500/70 transition backdrop-blur-sm">
-            <Plus className="w-5 h-5" />
-            Add to Watchlist
+            Part
           </button>
           <button className="flex items-center gap-2 px-8 py-3 bg-gray-500/50 text-white rounded hover:bg-gray-500/70 transition backdrop-blur-sm">
             <Info className="w-5 h-5" />
