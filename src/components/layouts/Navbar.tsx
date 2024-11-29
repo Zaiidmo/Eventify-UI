@@ -10,6 +10,13 @@ import { Link } from "react-router-dom";
 export default function Navbar() {
   const [darkMode, setDarkMode] = useState(true);
 
+  const navItems = [
+    { name: 'Home', href: '/' },
+    { name: 'Events', href: '/events' },
+    { name: 'Account', href: '/profile' },
+    // { name: 'Contact', href: '/contact' },
+  ]
+
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
@@ -24,7 +31,7 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 backdrop-filter backdrop-blur-xl bg-gradient-to-b from-white/60 to-white/30 dark:from-black/60 dark:to-black/30 border-b border-gray-200 dark:border-gray-900 shadow-lg z-50">
       <div className=" mx-auto px-4">
-        <div className="flex items-center justify-between h-24">
+        <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <a
               href="/"
@@ -32,11 +39,28 @@ export default function Navbar() {
             >
               <img
                 src="./logo.png"
-                className=" w-32 rounded-full"
+                className=" w-32  hidden md:block"
+                alt="Logo"
+              />
+              <img
+                src="./favicon.png"
+                className="w-12 block md:hidden"
                 alt="Logo"
               />
             </a>
-          </div>
+            <div className="hidden md:block">
+              <div className="ml-10 flex items-baseline space-x-4">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="text-gray-600 hover:text-black dark:text-gray-300 dark:hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            </div>          </div>
           <div className="flex items-center space-x-4">
             {!isAuth ? (
               <>
@@ -59,17 +83,17 @@ export default function Navbar() {
               </>
             ) : (
               <Link to={"/"}>
-                  <Button
-                    variant="outline"
-                    className="text-gray-800 dark:text-white border-gray-300 dark:border-gray-600 hover:bg-white/40 dark:hover:bg-gray-700/40 transition-all duration-300 ease-in-out backdrop-blur-md"
-                  >
-                    Welcome {authenticatedUser?.username}
-                  </Button>
-                </Link>
+                <Button
+                  variant="outline"
+                  className="text-gray-800 dark:text-white border-gray-300 dark:border-gray-600 hover:bg-white/40 dark:hover:bg-gray-700/40 transition-all duration-300 ease-in-out backdrop-blur-md"
+                >
+                  Welcome {authenticatedUser?.username}
+                </Button>
+              </Link>
             )}
 
             {/* Dark Mode Toggle Button */}
-            
+
             <Button
               variant="ghost"
               size="icon"

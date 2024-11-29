@@ -1,12 +1,14 @@
+import HeroSection from "@/components/home/HeroSection";
 import "../App.css";
 function Home() {
   return (
     <>
-     <div className="w-screen ">
-        <div className="relative h-[80vh] w-full">
+      <div className="w-screen ">
+        <HeroSection />
+        {/* <div className="relative h-[80vh] w-full">
           <img
             src="./hero.webp"
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 h-full object-cover"
             alt="Logo"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
@@ -18,8 +20,8 @@ function Home() {
               A modern and responsive web application template
             </p>
           </div>
-        </div>
-     </div>
+        </div> */}
+      </div>
     </>
   );
 }

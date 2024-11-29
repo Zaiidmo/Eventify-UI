@@ -42,15 +42,17 @@ export const  loginUser = async (credentials: {
     throw err;
   }
 };
-// export const verifyOtp = async (otpData: {
-//   identifier: string;
-//   otp: string;
-//   rememberDevice: boolean;
-// }) => {
-//   try {
-//     const response = await axiosInstance.post("/auth/register", otpData);
-//     return response.data;
-//   } catch (err) {
-//     throw err;
-//   }
-// };
+
+export const getLastEvent = async () => {
+  try {
+    const response = await apiClient.get("/events/latest");
+    return response.data;
+  } catch (err: any) {
+    if (err instanceof AxiosError) {
+      console.error("Axios Error: ", err.response?.data || err.message);
+    } else {
+      console.error("Unknown Error: ", err);
+    }
+    throw err;
+  }
+}
