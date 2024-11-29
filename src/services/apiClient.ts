@@ -56,3 +56,23 @@ export const getLastEvent = async () => {
     throw err;
   }
 }
+
+export const getUpcomingEvents = async () => {
+  try {
+    const response = await apiClient.get("/events/upcoming");
+    const data = [];
+    for (let i = 0; i < 3; i++) {
+      data.push(response.data.data[i]);
+    }
+    console.log("data: ", response.data.data[2]);
+    
+    return data;
+  } catch (err: any) {
+    if (err instanceof AxiosError) {
+      console.error("Axios Error: ", err.response?.data || err.message);
+    } else {
+      console.error("Unknown Error: ", err);
+    }
+    throw err;
+  }
+}

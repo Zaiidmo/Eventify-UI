@@ -1,10 +1,12 @@
 import HeroSection from "@/components/home/HeroSection";
 import "../App.css";
+import PopulareLocations from "@/components/events/PopularLocations";
 function Home() {
   return (
     <>
       <div className="w-screen ">
         <HeroSection />
+        <PopulareLocations/>
         {/* <div className="relative h-[80vh] w-full">
           <img
             src="./hero.webp"
