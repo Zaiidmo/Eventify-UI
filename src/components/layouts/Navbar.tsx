@@ -8,7 +8,7 @@ import { RootState } from "@/store/store";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
 
   useEffect(() => {
     if (darkMode) {
@@ -23,7 +23,7 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 backdrop-filter backdrop-blur-xl bg-gradient-to-b from-white/60 to-white/30 dark:from-black/60 dark:to-black/30 border-b border-gray-200 dark:border-gray-900 shadow-lg z-50">
-      <div className="max-w-5xl mx-auto px-4">
+      <div className=" mx-auto px-4">
         <div className="flex items-center justify-between h-24">
           <div className="flex items-center">
             <a
@@ -31,8 +31,8 @@ export default function Navbar() {
               className="text-2xl font-semibold text-gray-800 dark:text-white text-shadow"
             >
               <img
-                src="./vlpha.png"
-                className="w-10 bg-black rounded-full"
+                src="./logo.png"
+                className=" w-32 rounded-full"
                 alt="Logo"
               />
             </a>
