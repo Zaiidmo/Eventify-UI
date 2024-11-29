@@ -26,8 +26,8 @@ export const registerUser = async (userData: {
     throw err;
   }
 };
-export const loginUser = async (credentials: {
-  identifier: string;
+export const  loginUser = async (credentials: {
+  email: string;
   password: string;
 }) => {
   try {

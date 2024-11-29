@@ -3,9 +3,6 @@
 import { useState, useEffect } from "react";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "../ui/button";
-import { GlassModal } from "../modals/GlassModal";
-import LoginForm from "../auth/LoginForm";
-import RegisterForm from "../auth/RegisterForm";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { Link } from "react-router-dom";
@@ -22,6 +19,7 @@ export default function Navbar() {
   }, [darkMode]);
 
   const isAuth = useSelector((state: RootState) => state.auth.isAuthenticated);
+  const authenticatedUser = useSelector((state: RootState) => state.auth.user);
 
   return (
     <nav className="fixed top-0 left-0 right-0 backdrop-filter backdrop-blur-xl bg-gradient-to-b from-white/60 to-white/30 dark:from-black/60 dark:to-black/30 border-b border-gray-200 dark:border-gray-900 shadow-lg z-50">
@@ -40,7 +38,7 @@ export default function Navbar() {
             </a>
           </div>
           <div className="flex items-center space-x-4">
-            {!isAuth && (
+            {!isAuth ? (
               <>
                 <Link to={"login"}>
                   <Button
@@ -59,9 +57,19 @@ export default function Navbar() {
                   </Button>
                 </Link>
               </>
+            ) : (
+              <Link to={"/"}>
+                  <Button
+                    variant="outline"
+                    className="text-gray-800 dark:text-white border-gray-300 dark:border-gray-600 hover:bg-white/40 dark:hover:bg-gray-700/40 transition-all duration-300 ease-in-out backdrop-blur-md"
+                  >
+                    Welcome {authenticatedUser?.username}
+                  </Button>
+                </Link>
             )}
 
             {/* Dark Mode Toggle Button */}
+            
             <Button
               variant="ghost"
               size="icon"

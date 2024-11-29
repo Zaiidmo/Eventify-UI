@@ -199,7 +199,7 @@ export default function RegisterForm() {
         <div>
           <Button
             type="submit"
-            className="w-full text-black bg-orange-500/80 rounded-md"
+            className="w-full text-white bg-primary rounded-md"
           >
             Sign Up
           </Button>
