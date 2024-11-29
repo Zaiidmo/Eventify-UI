@@ -17,34 +17,31 @@ export const registerUser = async (userData: {
   try {
     const response = await apiClient.post("/auth/register", userData);
     return response.data;
-  } catch (err) {
-    if (axios.isAxiosError(err)) {
-      return Promise.reject({
-        message: err.response?.data?.message || "API error occurred",
-        status: err.response?.status || 500,
-      });
+  } catch (err: any) {
+    if (err instanceof AxiosError) {
+      console.error("Axios Error: ", err.response?.data || err.message);
+    } else {
+      console.error("Unknown Error: ", err);
     }
-    return Promise.reject({ message: "An unexpected error occurred", status: 500 });
+    throw err;
   }
-// };
-// export const loginUser = async (credentials: {
-//   identifier: string;
-//   password: string;
-//   rememberMe: boolean;
-// }) => {
-//   try {
-//     const response = await axiosInstance.post("/auth/login", credentials);
-//     return response.data;
-//   } catch (err: any) {
-//     if (err instanceof AxiosError) {
-//       console.error("Axios Error: ", err.response?.data || err.message);
-//     } else {
-//       console.error("Unknown Error: ", err);
-//     }
-//     throw err;
-//   }
-// };
-
+};
+export const loginUser = async (credentials: {
+  identifier: string;
+  password: string;
+}) => {
+  try {
+    const response = await apiClient.post("/auth/login", credentials);
+    return response.data;
+  } catch (err: any) {
+    if (err instanceof AxiosError) {
+      console.error("Axios Error: ", err.response?.data || err.message);
+    } else {
+      console.error("Unknown Error: ", err);
+    }
+    throw err;
+  }
+};
 // export const verifyOtp = async (otpData: {
 //   identifier: string;
 //   otp: string;
@@ -57,4 +54,3 @@ export const registerUser = async (userData: {
 //     throw err;
 //   }
 // };
-};
