@@ -8,6 +8,14 @@ const apiClient = axios.create({
   },
 });
 
+apiClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token'); 
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 export const registerUser = async (userData: {
   username: string;
   email: string;
@@ -42,7 +50,6 @@ export const loginUser = async (credentials: {
     throw err;
   }
 };
-
 export const getLastEvent = async () => {
   try {
     const response = await apiClient.get("/events/latest");
@@ -56,7 +63,6 @@ export const getLastEvent = async () => {
     throw err;
   }
 };
-
 export const getFourcomingEvents = async () => {
   try {
     const response = await apiClient.get("/events/upcoming");
@@ -80,7 +86,6 @@ export const getFourcomingEvents = async () => {
     throw err;
   }
 };
-
 export const getPastEvents = async () => {
   try {
     const response = await apiClient.get("events/past-events");
@@ -96,7 +101,6 @@ export const getPastEvents = async () => {
     throw new Error;
   }
 }
-
 export const getAllUpcomingEvents = async () => {
   try {
     const response = await apiClient.get("events/upcoming");
@@ -105,3 +109,30 @@ export const getAllUpcomingEvents = async () => {
     throw new Error;
   }
 }
+export const getOrganizerEvents = async () => {
+  try {
+    const response = await apiClient.get('/events/my-events');
+    return response.data;
+  } catch (error:any) {
+    throw new Error(error.response?.data?.message || 'Failed to fetch organizer events');
+  }
+};
+
+export const getParticipatedEvents = async () => {
+  try {
+    const response = await apiClient.get('/registrations/user');    
+    return response.data;
+  } catch (error:any) {
+    throw new Error(error.response?.data?.message || 'Failed to fetch participated events');
+  }
+};
+
+export const participate = async (eventId: string) => {
+  try {
+    const response = await apiClient.post('/registrations', {event: eventId});
+    return response.data;
+  } catch (error:any) {
+    throw new Error(error.response?.data?.message || 'Failed to participate in event');
+  }
+}
+

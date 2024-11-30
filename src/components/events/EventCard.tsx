@@ -1,4 +1,4 @@
-import { CalendarDays, MapPin, Play, Users } from "lucide-react";
+import { CalendarDays, MapPin, Users } from "lucide-react";
 import { GlassModal } from "../modals/GlassModal";
 import ParticipateButton from "./ParticipateButton";
 
@@ -28,6 +28,7 @@ const DateDisplay: React.FC<{ dateString: string }> = ({ dateString }) => {
 };
 
 export function EventCard({
+  _id,
   title,
   date,
   location,
@@ -36,7 +37,9 @@ export function EventCard({
   description,
 }: EventCardProps) {
   return (
-    <GlassModal 
+    // console.log("EventCardProps: ", _id),
+
+    <GlassModal
       trigger={
         <div
           className="w-full max-w-sm  group cursor-pointer rounded-xl"
@@ -46,7 +49,7 @@ export function EventCard({
             <img
               src={banner}
               alt={`Image for ${title}`}
-              className="w-full h-full object-cover rounded-xl shadow-xl"
+              className="w-full h-full object-cover rounded-xl shadow-xl "
               loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-xl " />
@@ -66,7 +69,11 @@ export function EventCard({
       <div className="p-2">
         <div className="space-y-6 ">
           <div className="relative w-full ">
-            <img src={banner} alt={title} className="object-cover rounded-xl w-full " />
+            <img
+              src={banner}
+              alt={title}
+              className="object-cover rounded-xl w-full "
+            />
           </div>
           <div>
             <h2 className="text-2xl font-bold">{title}</h2>
@@ -89,7 +96,10 @@ export function EventCard({
             <h3 className="text-lg font-semibold mb-2">About this event</h3>
             <p className="text-gray-700 dark:text-gray-400">{description}</p>
           </div>
-          <ParticipateButton/>
+          <ParticipateButton
+            key={_id} 
+            eventId={_id}
+          />{" "}
         </div>
       </div>
     </GlassModal>
