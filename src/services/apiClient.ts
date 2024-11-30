@@ -96,3 +96,12 @@ export const getPastEvents = async () => {
     throw new Error;
   }
 }
+
+export const getAllUpcomingEvents = async () => {
+  try {
+    const response = await apiClient.get("events/upcoming");
+    return response.data.data;
+  } catch( err) {
+    throw new Error;
+  }
+}
