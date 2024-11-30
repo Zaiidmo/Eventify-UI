@@ -83,7 +83,7 @@ const HeroSection: React.FC = () => {
         <p className="text-gray-200 text-ellipsis overflow-hidden whitespace-nowrap max-w-4xl mb-8">{event.description}</p>
 
         <div className="flex gap-4">
-          <ParticipateButton/>
+          <ParticipateButton eventId={event._id}/>
           <GlassModal trigger={
           <button className="flex items-center gap-2 px-8 py-3 bg-gray-500/50 text-white rounded hover:bg-gray-500/70 transition backdrop-blur-sm">
             <Info className="w-5 h-5" />
@@ -116,7 +116,7 @@ const HeroSection: React.FC = () => {
             <h3 className="text-lg font-semibold mb-2">About this event</h3>
             <p className="text-muted-foreground">{event.description}</p>
           </div>
-          <ParticipateButton/>
+          <ParticipateButton eventId={event._id}/>
         </div>
       </div>
       </GlassModal>
