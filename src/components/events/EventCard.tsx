@@ -23,7 +23,7 @@ export function EventCard({
     <GlassModal
       trigger={
         <div
-          className="w-full max-w-sm overflow-hidden group cursor-pointer"
+          className="w-full max-w-lg  group cursor-pointer"
           aria-label={`Event: ${title}`}
         >
           <div className="relative aspect-video">

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { EventCard } from "./EventCard";
-import { getUpcomingEvents } from "@/services/apiClient";
+import { getFourcomingEvents } from "@/services/apiClient";
 import { GridLoader } from "react-spinners";
 
 interface Event {
@@ -15,15 +15,15 @@ interface Event {
 
 
   
-  export default function PopulareLocations() {
+  export default function LastPostedEvents() {
     const [events, setEvents] = useState<Event[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-      const fetchPopularLocations = async () => {
+      const fetchLastPostedEvents = async () => {
         try {
-          const response = await getUpcomingEvents();
+          const response = await getFourcomingEvents();
           setEvents(response);
           console.log("response: ", response);
           setLoading(false);
@@ -33,7 +33,7 @@ interface Event {
         }
       };
 
-      fetchPopularLocations();
+      fetchLastPostedEvents();
     }, []);
 
     if (loading) {
@@ -61,11 +61,11 @@ interface Event {
     }
 
     return (
-      <div className="w-full flex flex-col p-8 gap-4 md:gap-8">
-        <h2 className="text-3xl font-semibold font-titles text-gray-800 dark:text-white mb-4">
-          Popular Locations
+      <div className="w-full justify-center items-center flex flex-col p-8 gap-4 md:gap-8 ">
+        <h2 className="text-3xl font-semibold text-left w-full font-titles text-gray-800 dark:text-white mb-4">
+          The Last Posted Events
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-4 w-full h-full">
           {events.map((event) => (
             <EventCard key={event._id} {...event} />
           ))}
