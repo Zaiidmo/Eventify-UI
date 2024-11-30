@@ -1,21 +1,23 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Moon, Sun } from "lucide-react";
+import { LogOut, Moon, Sun, User } from "lucide-react";
 import { Button } from "../ui/button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { Link } from "react-router-dom";
+import { logout } from "@/store/slices/authSlice";
 
 export default function Navbar() {
   const [darkMode, setDarkMode] = useState(true);
+  const dispatch = useDispatch();
 
   const navItems = [
-    { name: 'Home', href: '/' },
-    { name: 'Events', href: '/events' },
-    { name: 'Account', href: '/profile' },
+    { name: "Home", href: "/" },
+    { name: "Events", href: "/events" },
+    { name: "Account", href: "/profile" },
     // { name: 'Contact', href: '/contact' },
-  ]
+  ];
 
   useEffect(() => {
     if (darkMode) {
@@ -25,8 +27,12 @@ export default function Navbar() {
     }
   }, [darkMode]);
 
+  const logoutUser = () => {
+    dispatch(logout())
+  }
+
   const isAuth = useSelector((state: RootState) => state.auth.isAuthenticated);
-  const authenticatedUser = useSelector((state: RootState) => state.auth.user);
+  // const authenticatedUser = useSelector((state: RootState) => state.auth.user);
 
   return (
     <nav className="fixed top-0 left-0 right-0 backdrop-filter backdrop-blur-xl bg-gradient-to-b from-white/60 to-white/30 dark:from-black/60 dark:to-black/30 border-b border-gray-200 dark:border-gray-900 shadow-lg z-50">
@@ -60,7 +66,8 @@ export default function Navbar() {
                   </Link>
                 ))}
               </div>
-            </div>          </div>
+            </div>{" "}
+          </div>
           <div className="flex items-center space-x-4">
             {!isAuth ? (
               <>
@@ -82,14 +89,25 @@ export default function Navbar() {
                 </Link>
               </>
             ) : (
-              <Link to={"/"}>
+              <>
+                <Link to={"/"}>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="rounded-full bg-white/40 dark:bg-black/40 text-gray-800 dark:text-white hover:bg-white/60 dark:hover:bg-gray-800/60 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600 transition-all duration-300 ease-in-out backdrop-blur-md"
+                  >
+                    <User />
+                  </Button>
+                </Link>
                 <Button
-                  variant="outline"
-                  className="text-gray-800 dark:text-white border-gray-300 dark:border-gray-600 hover:bg-white/40 dark:hover:bg-gray-700/40 transition-all duration-300 ease-in-out backdrop-blur-md"
+                  onClick={logoutUser}
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full bg-white/40 dark:bg-black/40 text-gray-800 dark:text-white hover:bg-white/60 dark:hover:bg-gray-800/60 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600 transition-all duration-300 ease-in-out backdrop-blur-md"
                 >
-                  Welcome {authenticatedUser?.username}
+                  <LogOut />{" "}
                 </Button>
-              </Link>
+              </>
             )}
 
             {/* Dark Mode Toggle Button */}

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Play, Info } from "lucide-react";
+import { CalendarDays, Info, MapPin, Users } from "lucide-react";
 import { GridLoader } from "react-spinners";
 import { getLastEvent } from "@/services/apiClient";
 import BannerImage from "./BannerImage";
+import ParticipateButton from "../events/ParticipateButton";
+import { GlassModal } from "../modals/GlassModal";
 
 interface Event {
   _id: string;
@@ -81,14 +83,43 @@ const HeroSection: React.FC = () => {
         <p className="text-gray-200 text-ellipsis overflow-hidden whitespace-nowrap max-w-4xl mb-8">{event.description}</p>
 
         <div className="flex gap-4">
-          <button className="flex items-center gap-2 px-8 py-3 bg-white text-black rounded hover:bg-white/90 transition">
-            <Play className="w-5 h-5" />
-            Join Event
-          </button>
+          <ParticipateButton eventId={event._id}/>
+          <GlassModal trigger={
           <button className="flex items-center gap-2 px-8 py-3 bg-gray-500/50 text-white rounded hover:bg-gray-500/70 transition backdrop-blur-sm">
             <Info className="w-5 h-5" />
             More Info
           </button>
+          }>
+            <div className="p-2">
+        <div className="space-y-6 ">
+          <div className="relative w-full ">
+            <img src={event.banner} alt={event.title} className="object-cover rounded-xl w-full " />
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold">{event.title}</h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="flex items-center space-x-2">
+              <CalendarDays className="h-5 w-5 text-muted-foreground" />
+              <span>{event.date}</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <MapPin className="h-5 w-5 text-muted-foreground" />
+              <span>{event.location}</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Users className="h-5 w-5 text-muted-foreground" />
+              <span>{event.capacity} attendees</span>
+            </div>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-2">About this event</h3>
+            <p className="text-muted-foreground">{event.description}</p>
+          </div>
+          <ParticipateButton eventId={event._id}/>
+        </div>
+      </div>
+      </GlassModal>
         </div>
       </div>
     </div>

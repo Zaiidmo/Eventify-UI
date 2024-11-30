@@ -61,7 +61,7 @@ interface Event {
     }
 
     return (
-      <div className="w-full my-8 justify-center items-center flex flex-col p-8 gap-4 md:gap-8 ">
+      <div className="w-full my-8 mb-16 justify-center items-center flex flex-col p-8 gap-4 md:gap-8 ">
         <h2 className="text-3xl font-semibold text-left w-full font-titles text-gray-800 dark:text-white mb-4">
           What You Have Missed
         </h2>
