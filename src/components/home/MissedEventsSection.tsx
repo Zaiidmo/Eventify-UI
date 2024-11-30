@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { EventCard } from "./EventCard";
-import { getFourcomingEvents } from "@/services/apiClient";
+import { EventCard } from "../events/EventCard";
+import { getFourcomingEvents, getPastEvents } from "@/services/apiClient";
 import { GridLoader } from "react-spinners";
 
 interface Event {
@@ -15,15 +15,15 @@ interface Event {
 
 
   
-  export default function LastPostedEvents() {
+  export default function MissedEvents() {
     const [events, setEvents] = useState<Event[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-      const fetchLastPostedEvents = async () => {
+      const fetchPastEvents = async () => {
         try {
-          const response = await getFourcomingEvents();
+          const response = await getPastEvents();
           setEvents(response);
           console.log("response: ", response);
           setLoading(false);
@@ -33,7 +33,7 @@ interface Event {
         }
       };
 
-      fetchLastPostedEvents();
+      fetchPastEvents();
     }, []);
 
     if (loading) {
@@ -61,11 +61,11 @@ interface Event {
     }
 
     return (
-      <div className="w-full justify-center items-center flex flex-col p-8 gap-4 md:gap-8 ">
+      <div className="w-full my-8 justify-center items-center flex flex-col p-8 gap-4 md:gap-8 ">
         <h2 className="text-3xl font-semibold text-left w-full font-titles text-gray-800 dark:text-white mb-4">
-          The Last Posted Events
+          What You Have Missed
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-4 w-full h-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mx-4 h-full w-full">
           {events.map((event) => (
             <EventCard key={event._id} {...event} />
           ))}

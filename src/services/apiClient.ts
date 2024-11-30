@@ -80,3 +80,19 @@ export const getFourcomingEvents = async () => {
     throw err;
   }
 };
+
+export const getPastEvents = async () => {
+  try {
+    const response = await apiClient.get("events/past-events");
+    const pastEvents = [];
+    for(let i = 0; i < response.data.data.length; i++) {
+      if(!response.data.data[i]){
+        break;
+      }
+      pastEvents.push(response.data.data[i])
+    }
+    return pastEvents;
+  } catch( err) {
+    throw new Error;
+  }
+}
