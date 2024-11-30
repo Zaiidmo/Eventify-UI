@@ -1,9 +1,10 @@
 import { RouteObject } from 'react-router-dom'
 import Home from '../pages/Home'
 import ForgotPassword from '@/pages/Auth/ForgotPassword'
-import { ProtectedRoute, PublicRoute } from '@/guards/auth.guard'
+import { PublicRoute } from '@/guards/auth.guard'
 import Login from '@/pages/Auth/Login'
 import Register from '@/pages/Auth/Register'
+import EventsPage from '@/pages/Events'
 
 const routes: RouteObject[] = [
   {
@@ -22,6 +23,10 @@ const routes: RouteObject[] = [
     path: '/register',
     element: <PublicRoute><Register /></PublicRoute>,
   },
+  {
+    path: '/events',
+    element: <EventsPage />,
+  }
 ]
 
 export default routes

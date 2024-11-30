@@ -12,25 +12,27 @@ export interface Event {
 }
 
 export const fetchEvents = createAsyncThunk("events/upcoming", async () => {
-  const response = await getAllUpcomingEvents();
-  return response.data;
+  try {
+    const response = await getAllUpcomingEvents();
+    // console.log("API Response:", response);
+    return response;
+  } catch (error) {
+    console.error("Error fetching events:", error);
+  }
 });
 
 interface EventState {
   events: Event[];
   loading: boolean;
   error: string | null;
-  currentPage: number;
-  totalPages: number;
 }
 
 const initialState: EventState = {
   events: [],
   loading: false,
   error: null,
-  currentPage: 1,
-  totalPages: 1,
 };
+
 
 const eventSlice = createSlice({
   name: "events",
@@ -38,20 +40,17 @@ const eventSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-    .addCase(fetchEvents.pending, (state) => {
-      state.loading = true;
-    });
-    builder
-    .addCase(fetchEvents.fulfilled, (state, action) => {
-      state.loading = false;
-      state.events = action.payload.data;
-      state.currentPage = action.payload.currentPage;
-      state.totalPages = action.payload.totalPages;
-    });
-    builder.addCase(fetchEvents.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error.message || "Failed to fetch events";
-    });
+      .addCase(fetchEvents.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchEvents.fulfilled, (state, action) => {
+        state.loading = false;
+        state.events = action.payload;
+      })
+      .addCase(fetchEvents.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Failed to fetch events";
+      });
   },
 });
 
