@@ -1,5 +1,6 @@
-import { CalendarDays, MapPin, Users } from "lucide-react";
+import { CalendarDays, MapPin, Play, Users } from "lucide-react";
 import { GlassModal } from "../modals/GlassModal";
+import ParticipateButton from "./ParticipateButton";
 
 interface EventCardProps {
   _id: string;
@@ -11,6 +12,21 @@ interface EventCardProps {
   description: string;
 }
 
+const DateDisplay: React.FC<{ dateString: string }> = ({ dateString }) => {
+  const formatDate = (dateStr: string): string => {
+    const date = new Date(dateStr);
+    return new Intl.DateTimeFormat("en-GB", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+      .format(date)
+      .replace(/\//g, "-"); // Convert from dd/mm/yyyy to dd-mm-yyyy
+  };
+
+  return <p className="text-sm">{formatDate(dateString)}</p>;
+};
+
 export function EventCard({
   title,
   date,
@@ -20,7 +36,7 @@ export function EventCard({
   description,
 }: EventCardProps) {
   return (
-    <GlassModal
+    <GlassModal 
       trigger={
         <div
           className="w-full max-w-sm  group cursor-pointer"
@@ -36,7 +52,7 @@ export function EventCard({
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
             <div className="absolute bottom-0 left-0 p-4 text-white">
               <h3 className="text-lg font-semibold truncate">{title}</h3>
-              <p className="text-sm">{date}</p>
+              <DateDisplay dateString={date} />
             </div>
             {/* {category && (
               <span className="absolute top-2 right-2 bg-primary text-primary-foreground px-2 py-1 text-xs rounded">
@@ -47,23 +63,34 @@ export function EventCard({
         </div>
       }
     >
-      <div className="p-6">
-        <h2 className="text-2xl font-bold mb-4">{title}</h2>
-        <div className="space-y-4">
-          <div className="flex items-center">
-            <CalendarDays className="mr-2 h-5 w-5" />
-            <span>{date}</span>
+      <div className="p-2">
+        <div className="space-y-6 ">
+          <div className="relative w-full ">
+            <img src={banner} alt={title} className="object-cover rounded-xl w-full " />
           </div>
-          <div className="flex items-center">
-            <MapPin className="mr-2 h-5 w-5" />
-            <span>{location}</span>
+          <div>
+            <h2 className="text-2xl font-bold">{title}</h2>
           </div>
-          <div className="flex items-center">
-            <Users className="mr-2 h-5 w-5" />
-            <span>{capacity} attendees</span>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="flex items-center space-x-2">
+              <CalendarDays className="h-5 w-5 text-muted-foreground" />
+              <span>{date}</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <MapPin className="h-5 w-5 text-muted-foreground" />
+              <span>{location}</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Users className="h-5 w-5 text-muted-foreground" />
+              <span>{capacity} attendees</span>
+            </div>
           </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-2">About this event</h3>
+            <p className="text-muted-foreground">{description}</p>
+          </div>
+          <ParticipateButton/>
         </div>
-        <p className="mt-4 line-clamp-3">{description}</p>
       </div>
     </GlassModal>
   );

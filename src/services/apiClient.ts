@@ -61,7 +61,7 @@ export const getFourcomingEvents = async () => {
   try {
     const response = await apiClient.get("/events/upcoming");
     const data = [];
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 8; i++) {
       if (!response.data.data[i]) {
         break;
       }

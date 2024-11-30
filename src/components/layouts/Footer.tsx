@@ -1,4 +1,4 @@
-import { Linkedin } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -15,8 +15,8 @@ export default function Footer() {
             </a>
             . All Rights Reserved.
           </span>{" "}
-          <a href="https://www.vlpha.tech" target="_blank" className="text-gray-500 dark:text-gray-400 hover:text-primary">
-            <Linkedin className="" />
+          <a href="https://www.github.com/zaiidmo" target="_blank" className="text-gray-500 dark:text-gray-400 hover:text-primary">
+            <Github className="" />
           </a>
         </div>
       </div>
