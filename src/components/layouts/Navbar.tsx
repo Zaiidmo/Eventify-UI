@@ -15,7 +15,7 @@ export default function Navbar() {
   const navItems = [
     { name: "Home", href: "/" },
     { name: "Events", href: "/events" },
-    { name: "Account", href: "/profile" },
+    // { name: "Account", href: "/profile" },
     // { name: 'Contact', href: '/contact' },
   ];
 
@@ -28,11 +28,13 @@ export default function Navbar() {
   }, [darkMode]);
 
   const logoutUser = () => {
-    dispatch(logout())
-  }
+    dispatch(logout());
+  };
 
   const isAuth = useSelector((state: RootState) => state.auth.isAuthenticated);
-  // const authenticatedUser = useSelector((state: RootState) => state.auth.user);
+  const authenticatedUser = useSelector((state: RootState) => state.auth.user);
+
+  const userRole = authenticatedUser?.role;
 
   return (
     <nav className="fixed top-0 left-0 right-0 backdrop-filter backdrop-blur-xl bg-gradient-to-b from-white/60 to-white/30 dark:from-black/60 dark:to-black/30 border-b border-gray-200 dark:border-gray-900 shadow-lg z-50">
@@ -90,23 +92,26 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <Link to={"/"}>
+            
+                  {userRole === "organizer" && (
+                    <Link to={"/dashboard"}>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="rounded-xl bg-white/40 dark:bg-black/40 text-gray-800 dark:text-white hover:bg-white/60 dark:hover:bg-gray-800/60 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600 transition-all duration-300 ease-in-out backdrop-blur-md"
+                      >
+                        <User />
+                      </Button>
+                    </Link>
+                  )}
                   <Button
+                    onClick={logoutUser}
                     variant="ghost"
                     size="icon"
-                    className="rounded-full bg-white/40 dark:bg-black/40 text-gray-800 dark:text-white hover:bg-white/60 dark:hover:bg-gray-800/60 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600 transition-all duration-300 ease-in-out backdrop-blur-md"
+                    className="rounded-xl bg-white/40 dark:bg-black/40 text-gray-800 dark:text-white hover:bg-white/60 dark:hover:bg-gray-800/60 duration-300 ease-in-out backdrop-blur-md"
                   >
-                    <User />
+                    <LogOut />{" "}
                   </Button>
-                </Link>
-                <Button
-                  onClick={logoutUser}
-                  variant="ghost"
-                  size="icon"
-                  className="rounded-full bg-white/40 dark:bg-black/40 text-gray-800 dark:text-white hover:bg-white/60 dark:hover:bg-gray-800/60 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600 transition-all duration-300 ease-in-out backdrop-blur-md"
-                >
-                  <LogOut />{" "}
-                </Button>
               </>
             )}
 
@@ -116,7 +121,7 @@ export default function Navbar() {
               variant="ghost"
               size="icon"
               onClick={() => setDarkMode(!darkMode)}
-              className="rounded-full bg-white/40 dark:bg-black/40 text-gray-800 dark:text-white hover:bg-white/60 dark:hover:bg-gray-800/60 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600 transition-all duration-300 ease-in-out backdrop-blur-md"
+              className="rounded-xl bg-white/40 dark:bg-black/40 text-gray-800 dark:text-white hover:bg-white/60 dark:hover:bg-gray-800/60 focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-600 transition-all duration-300 ease-in-out backdrop-blur-md"
             >
               {darkMode ? (
                 <Sun className="h-[1.2rem] w-[1.2rem]" />

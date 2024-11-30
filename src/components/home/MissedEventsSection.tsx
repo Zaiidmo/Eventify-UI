@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { EventCard } from "../events/EventCard";
-import { getFourcomingEvents, getPastEvents } from "@/services/apiClient";
+import { getPastEvents } from "@/services/apiClient";
 import { GridLoader } from "react-spinners";
 
 interface Event {

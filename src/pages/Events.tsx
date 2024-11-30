@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { fetchEvents } from "@/store/slices/eventSlice";
 import { GridLoader } from "react-spinners";
 import { EventCard } from "@/components/events/EventCard";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
 
 const EventsPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { events, loading, error } = useSelector((state: any) => state.events);
 
   useEffect(() => {
