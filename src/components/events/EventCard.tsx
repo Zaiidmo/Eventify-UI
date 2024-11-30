@@ -39,17 +39,17 @@ export function EventCard({
     <GlassModal 
       trigger={
         <div
-          className="w-full max-w-sm  group cursor-pointer"
+          className="w-full max-w-sm  group cursor-pointer rounded-xl"
           aria-label={`Event: ${title}`}
         >
-          <div className="relative aspect-video">
+          <div className="relative aspect-video rounded-xl">
             <img
               src={banner}
               alt={`Image for ${title}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover rounded-xl shadow-xl"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-xl " />
             <div className="absolute bottom-0 left-0 p-4 text-white">
               <h3 className="text-lg font-semibold truncate">{title}</h3>
               <DateDisplay dateString={date} />
@@ -87,7 +87,7 @@ export function EventCard({
           </div>
           <div>
             <h3 className="text-lg font-semibold mb-2">About this event</h3>
-            <p className="text-muted-foreground">{description}</p>
+            <p className="text-gray-700 dark:text-gray-400">{description}</p>
           </div>
           <ParticipateButton/>
         </div>
