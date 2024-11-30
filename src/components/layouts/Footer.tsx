@@ -1,4 +1,4 @@
-import { Github, Linkedin } from "lucide-react";
+import { Github, Globe } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -9,15 +9,20 @@ export default function Footer() {
             © 2025{" "}
             <a
               href="/"
-              className="hover:underline hover:text-primary text-gray-500 font-bold"
+              className="hover:underline hover:text-primary text-gray-500 dark:text-gray-400gray-300 font-bold"
             >
               Eventify™
             </a>
             . All Rights Reserved.
           </span>{" "}
-          <a href="https://www.github.com/zaiidmo" target="_blank" className="text-gray-500 dark:text-gray-400 hover:text-primary">
-            <Github className="" />
-          </a>
+          <div className="w-fit gap-2 flex justify-evenly items-center">
+            <a href="https://www.github.com/zaiidmo" target="_blank" className="text-gray-500 dark:text-gray-400 hover:text-primary">
+              <Github className="" />
+            </a>
+            <a href="https://www.vlpha.tech" target="_blank" className="text-gray-500 dark:text-gray-400 hover:text-primary">
+              <Globe className="" />
+            </a>
+          </div>
         </div>
       </div>
     </nav>
