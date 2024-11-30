@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Play, Info } from "lucide-react";
-import axios from "axios";
 import { GridLoader } from "react-spinners";
 import { getLastEvent } from "@/services/apiClient";
 import BannerImage from "./BannerImage";
@@ -13,7 +12,6 @@ interface Event {
   location: string;
   banner: string;
   capacity: number;
-  isPublished: boolean;
 }
 
 const HeroSection: React.FC = () => {
@@ -26,7 +24,7 @@ const HeroSection: React.FC = () => {
       try {
         const response = await getLastEvent();
         setEvent(response);
-        console.log("response: ", response);
+        // console.log("response: ", response);
         setLoading(false);
       } catch (err) {
         setError("Failed to load the latest event. Please try again.");
@@ -80,7 +78,7 @@ const HeroSection: React.FC = () => {
           <span>{event.capacity} attendees</span>
         </div>
 
-        <p className="text-gray-200 max-w-2xl mb-8">{event.description}</p>
+        <p className="text-gray-200 text-ellipsis overflow-hidden whitespace-nowrap max-w-4xl mb-8">{event.description}</p>
 
         <div className="flex gap-4">
           <button className="flex items-center gap-2 px-8 py-3 bg-white text-black rounded hover:bg-white/90 transition">
