@@ -1,10 +1,11 @@
 import { RouteObject } from 'react-router-dom'
 import Home from '../pages/Home'
 import ForgotPassword from '@/pages/Auth/ForgotPassword'
-import { PublicRoute } from '@/guards/auth.guard'
+import { ProtectedRoute, PublicRoute } from '@/guards/auth.guard'
 import Login from '@/pages/Auth/Login'
 import Register from '@/pages/Auth/Register'
 import EventsPage from '@/pages/Events'
+import Dashboard from '@/pages/Dashboard'
 
 const routes: RouteObject[] = [
   {
@@ -26,6 +27,10 @@ const routes: RouteObject[] = [
   {
     path: '/events',
     element: <EventsPage />,
+  },
+  {
+    path: '/dashboard',
+    element: <ProtectedRoute><Dashboard/></ProtectedRoute>,
   }
 ]
 
