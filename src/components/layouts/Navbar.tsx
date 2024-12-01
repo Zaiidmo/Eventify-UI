@@ -7,10 +7,33 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { Link } from "react-router-dom";
 import { logout } from "@/store/slices/authSlice";
+import toast from "react-hot-toast";
 
 export default function Navbar() {
   const [darkMode, setDarkMode] = useState(true);
   const dispatch = useDispatch();
+
+  const notify = ({
+    message = "",
+    type = "default",
+    duration = 6000,
+  }: {
+    message: string;
+    type: "success" | "error" | "loading" | "default";
+    duration?: number;
+  }) => {
+    if (type in toast) {
+      (toast[type as keyof typeof toast] as Function)(message, {
+        duration,
+        position: "bottom-right",
+      });
+    } else {
+      toast(message, {
+        duration,
+        position: "bottom-right",
+      });
+    }
+  };
 
   const navItems = [
     { name: "Home", href: "/" },
@@ -29,6 +52,10 @@ export default function Navbar() {
 
   const logoutUser = () => {
     dispatch(logout());
+    notify({
+      message: "Logged out successfully",
+      type: "success",
+    });
   };
 
   const isAuth = useSelector((state: RootState) => state.auth.isAuthenticated);
