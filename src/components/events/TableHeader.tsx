@@ -17,13 +17,13 @@ interface TableHeaderProps {
 
 export function TableHeader({ columns, sortConfig, onSort }: TableHeaderProps) {
   return (
-    <thead className="backdrop-filter backdrop-blur-xl bg-primary text-white rounded-xl rounded-b-0 border-b-0 max-h-[90%]">
+    <thead className="backdrop-filter backdrop-blur-xl bg-primary  text-white rounded-xl rounded-b-0 border-b-0 max-h-[90%]">
       <tr>
         {columns.map((column) => (
           <th
             key={column.key}
             scope="col"
-            className="px-6 py-3 text-left text-xs font-medium text-black dark:text-white uppercase tracking-wider"
+            className="px-6 py-3 text-left text-xs font-medium text-black dark:text-white  tracking-wider"
           >
             {column.sortable ? (
               <button

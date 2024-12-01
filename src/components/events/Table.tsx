@@ -204,7 +204,7 @@ export function Table() {
 
   const columns: Column<any>[] = [
     { key: "title", label: "Event Title", sortable: true },
-    { key: "date", label: "Date", sortable: true },
+    { key: "date", label: "Date", sortable: false },
     { key: "capacity", label: "Capacity Left", sortable: true },  ];
 
   if (loading) {

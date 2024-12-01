@@ -15,18 +15,22 @@ interface EventFormData {
 }
 
 interface EditEventFormProps {
-  event: any; 
-  onSuccess: (updatedEvent: any) => void; 
+  event: any;
+  onSuccess: (updatedEvent: any) => void;
 }
 
 export function EditEventForm({ event, onSuccess }: EditEventFormProps) {
-  const { register, handleSubmit, formState: { errors } } = useForm<EventFormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<EventFormData>({
     defaultValues: {
       title: event.title,
       description: event.description,
       capacity: event.capacity,
       location: event.location,
-      date: event.date,
+      date: new Date(event.date).toLocaleDateString(),
     },
   });
   const onSubmit: SubmitHandler<EventFormData> = async (data) => {
@@ -42,9 +46,9 @@ export function EditEventForm({ event, onSuccess }: EditEventFormProps) {
     }
 
     try {
-      const response = await updateEvent(event._id, formData); // API call to PATCH endpoint
+      const response = await updateEvent(event._id, formData);
       toast.success("Event updated successfully!");
-      onSuccess(response.data); // Update the table with the updated event
+      onSuccess(response.data);
     } catch (error: any) {
       toast.error(error?.response?.data?.message || "Failed to update event.");
     }
@@ -54,7 +58,10 @@ export function EditEventForm({ event, onSuccess }: EditEventFormProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
       <div>
         <Label htmlFor="title">Title</Label>
-        <Input id="title" {...register("title", { required: "Title is required" })} />
+        <Input
+          id="title"
+          {...register("title", { required: "Title is required" })}
+        />
         {errors.title && <p className="text-red-500">{errors.title.message}</p>}
       </div>
       <div>
@@ -65,30 +72,53 @@ export function EditEventForm({ event, onSuccess }: EditEventFormProps) {
           className="w-full border border-gray-400 rounded-md"
           rows={4}
         />
-        {errors.description && <p className="text-red-500">{errors.description.message}</p>}
+        {errors.description && (
+          <p className="text-red-500">{errors.description.message}</p>
+        )}
       </div>
       <div>
         <Label htmlFor="capacity">Capacity</Label>
         <Input
           id="capacity"
           type="number"
-          {...register("capacity", { required: "Capacity is required", min: 1 })}
+          {...register("capacity", {
+            required: "Capacity is required",
+            min: 1,
+          })}
         />
-        {errors.capacity && <p className="text-red-500">{errors.capacity.message}</p>}
+        {errors.capacity && (
+          <p className="text-red-500">{errors.capacity.message}</p>
+        )}
       </div>
       <div>
         <Label htmlFor="location">Location</Label>
-        <Input id="location" {...register("location", { required: "Location is required" })} />
-        {errors.location && <p className="text-red-500">{errors.location.message}</p>}
+        <Input
+          id="location"
+          {...register("location", { required: "Location is required" })}
+        />
+        {errors.location && (
+          <p className="text-red-500">{errors.location.message}</p>
+        )}
       </div>
       <div>
         <Label htmlFor="date">Date</Label>
-        <Input id="date" type="date" {...register("date", { required: "Date is required" })} />
+        <Input
+          id="date"
+          type="date"
+          {...register("date", { required: "Date is required" })}
+          min={new Date().toISOString().split("T")[0]} 
+        />
         {errors.date && <p className="text-red-500">{errors.date.message}</p>}
       </div>
+
       <div>
         <Label htmlFor="banner">Banner</Label>
-        <Input id="banner" type="file" accept="image/*" {...register("banner")} />
+        <Input
+          id="banner"
+          type="file"
+          accept="image/*"
+          {...register("banner")}
+        />
       </div>
       <Button type="submit">Update Event</Button>
     </form>
