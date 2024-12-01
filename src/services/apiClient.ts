@@ -145,3 +145,19 @@ export const fetchParticipants = async (eventId: string) => {
   }
 }
 
+export const createEvent = async (eventData: FormData) => {
+  try {
+    const response = await apiClient.post("/events/create", eventData, {
+      headers: {
+        "Content-Type": "multipart/form-data", 
+      },
+    });    return response.data;
+  } catch (err: any) {
+    if (err instanceof AxiosError) {
+      console.error("Axios Error: ", err.response?.data || err.message);
+    } else {
+      console.error("Unknown Error: ", err);
+    }
+    throw err;
+  }
+}

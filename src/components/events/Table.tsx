@@ -28,6 +28,8 @@ export function Table() {
     setLoading(true);
     try {
       const data = await getOrganizerEvents();
+      for (let i = 0; i < data.data.length; i++) {
+        data.data[i].date = new Date(data.data[i].date).toLocaleDateString();      }
       setEvents(data.data);
     } catch (err: any) {
       setError(err.message || "Failed to fetch events");
@@ -52,7 +54,7 @@ export function Table() {
     }
   
     const doc = new jsPDF();
-    const margin = 20;
+    const margin = 10;
     const pageWidth = doc.internal.pageSize.getWidth();
   
     // Title
@@ -64,7 +66,7 @@ export function Table() {
     doc.text(`Event: ${eventTitle}`, pageWidth / 2, margin + 10, { align: "center" });
   
     // Decorative line
-    doc.setDrawColor(0); // Black
+    doc.setDrawColor(0); 
     doc.setLineWidth(0.5);
     doc.line(margin, margin + 15, pageWidth - margin, margin + 15);
   
@@ -111,25 +113,9 @@ export function Table() {
     const footerY = doc.internal.pageSize.getHeight() - margin;
     doc.setFontSize(10);
     doc.text(`Generated on: ${new Date().toLocaleDateString()}`, margin, footerY);
-    // doc.text(
-    //   `Page ${doc.internal.getCurrentPageInfo().pageNumber}`,
-    //   pageWidth - margin,
-    //   footerY,
-    //   { align: "right" }
-    // );
-  
     // Save File
     const sanitizedTitle = eventTitle.replace(/[^a-z0-9]/gi, "_").toLowerCase();
     doc.save(`${sanitizedTitle}_participants.pdf`);
-  };
-  
-
-  const handleSort = (key: string) => {
-    setSortConfig((current) => ({
-      key,
-      direction:
-        current?.key === key && current.direction === "asc" ? "desc" : "asc",
-    }));
   };
 
   useEffect(() => {
@@ -153,13 +139,13 @@ export function Table() {
   if (error) return <p className="text-red-500">{error}</p>;
 
   return (
-    <div className="shadow w-full mb-16">
+    <div className="shadow w-full mb-16 font-poppins my-4">
       <div className="overflow-x-auto rounded-xl">
         <table className="min-w-full rounded-xl divide-y text-black divide-gray-300">
           <TableHeader
             columns={columns}
             sortConfig={sortConfig}
-            onSort={handleSort}
+            onSort={() => {}}
           />
           <tbody className="divide-y divide-gray-200  bg-gray-100/60 dark:bg-gray-600/60">
             {events.map((event) => (
@@ -167,7 +153,7 @@ export function Table() {
                 key={event._id}
                 trigger={
                   <tr
-                    className="cursor-pointer text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black hover:bg-gray-100"
+                    className="cursor-pointer text-gray-600 text-left dark:text-gray-400 hover:text-black dark:hover:text-black hover:bg-gray-100"
                     onClick={() => fetchEventParticipants(event._id)}
                   >
                     {columns.map((column) => (
