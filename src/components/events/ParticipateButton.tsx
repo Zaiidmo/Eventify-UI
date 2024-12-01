@@ -3,10 +3,34 @@ import { Play, StopCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import toast from "react-hot-toast";
 
 interface ParticipateButtonProps {
   eventId: string;
 }
+
+const notify = ({
+  message = "",
+  type = "default",
+  duration = 6000,
+}: {
+  message: string;
+  type: "success" | "error" | "loading" | "default" | "info" ;
+  duration?: number;
+}) => {
+  if (type in toast) {
+    (toast[type as keyof typeof toast] as Function)(message, {
+      duration,
+      position: "bottom-right",
+    });
+  } else {
+    toast(message, {
+      duration,
+      position: "bottom-right",
+    });
+  }
+};
+
 
 const ParticipateButton: React.FC<ParticipateButtonProps> = ({ eventId }) => {
   const [loading, setLoading] = useState(false);
@@ -25,13 +49,14 @@ const ParticipateButton: React.FC<ParticipateButtonProps> = ({ eventId }) => {
         console.log("API response:", result.data);
         if (result.error) {
           setError(result.error);
+          notify({ message: result.error, type: "error" });
           return;
         }
   
         const events = result.data; 
-        if (events.some((event: any) => event.event._id === eventId)) {
+        if (events.some((event: any) => event._id === eventId)) {
           console.log("Already registered");
-          
+          notify({ message: "You have already registered for this event", type: "info" });
           setIsAlreadyRegistered(true);
         }
       } catch (error: any) {
@@ -60,6 +85,7 @@ const ParticipateButton: React.FC<ParticipateButtonProps> = ({ eventId }) => {
   const participateInEvent = async () => {
     if (!authenticated) {
       setError("Please login to participate in the event");
+      notify({ message: "Please login to participate in the event", type: "error" });
       return;
     }
 
@@ -69,9 +95,13 @@ const ParticipateButton: React.FC<ParticipateButtonProps> = ({ eventId }) => {
       const result = await participate(eventId);
       if (result.error) {
         setError(result.error);
+        notify({ message: result.error, type: "error" });
         return;
       }
       setSuccess(true);
+      console.log("Participate API response:", result.data);
+      
+      notify({ message: `You successfully registered your participation for this event`, type: "success" });
       setIsAlreadyRegistered(true); // Update immediately
     } catch (error: any) {
       const message =
