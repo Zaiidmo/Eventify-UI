@@ -1,50 +1,71 @@
-# React + TypeScript + Vite
+# Eventify 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+Eventify is a platform designed to create, manage, and participate in various sports events. This application allows event organizers to manage events effectively and attendees to view details, register, and participate.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Demo Live 
+(Needs the server's responses)
+[Eventify](https://eventify.vlpha.tech)
 
-## Expanding the ESLint configuration
+## Features 
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **JWT Authentication**: Secure authentication system using JSONWebToken
+- **Email Verification**: A rebust notification system, to confirm *register* in the application
+- **Event Creation**: Organizers can create events with details like title, description, date, location, and capacity.
+- **Event Management**: Includes features to edit or delete events as needed.
+- **Participants Management**: View and download participant details for specific events.
+- **Sorting and Filtering**: Sort events by date, capacity, or title for better organization.
+- **Responsive Design**: Optimized for use on both desktop and mobile devices.
 
-- Configure the top-level `parserOptions` property like this:
+## Tech Stack 
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **Frontend**: React.js, TypeScript , Tailwind CSS 
+- **Backend**: Node.js, Nest.js
+- **Database**: MongoDB
+- **DevOps** : Docker, DockerHub, GithubAction CI/CD, Vercel, EC2
+- **Libraries**:
+  - `redux redux/toolkit` for global state management.
+  - `react-hook-form` for form management.
+  - `react-hot-toast` for notifications.
+  - `react-spinners` for loading indicators.
+  - `lucide-react` for icons.
+  - `jspdf` for generating downloadable participant lists.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Installation
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Prerequisites
+- Node.js and npm installed.
+- MongoDB instance running locally or remotely.
+- [API Project](https://www.github.com/Zaiidmo/Eventify-API)
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Steps
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Zaiid/eventify-ui.git
+   ```
+2. Navigate to the project's directory
+   ```bash
+   cd eventify-ui.git
+   ```
+3. Install Dependencies
+   ```bash
+   npm install 
+   ```
+5. Start the developement 
+   ```bash
+   npm run dev
+   ```
+
+### Usage 
+
+1. Create Events
+  - Log in as an `Organizer` and navigate to the dashboard.
+  - Use the `Create Event` button to display the form modal and add a new evemt.
+2. Manage Events
+  - View events in a sortable table in the dashboard
+  - Click the event to display the participated users and two buttons to edit or delete the event.
+3. Participate to an event
+  - Log in as a `user` and navigate to the events page.
+  - Click on any event's card you like and scroll down and click in the participate button, notice that the event should not be organizer by the same user who wanna participate
