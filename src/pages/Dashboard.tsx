@@ -25,7 +25,7 @@ const Dashboard = () => {
   return (
     <div className="w-screen ">
       <div className="w-full my-8 justify-center items-center flex flex-col md:p-8 gap-4 md:gap-8 ">
-        <h1 className="text-sm md:text-4xl text-center w-full font-headers text-gray-800 dark:text-white mb-4">
+        <h1 className="text-sm md:text-xl text-center w-full font-headers text-gray-800 dark:text-white mb-4">
           <>
             <div>
               <h1>{AuthenticatedUser.username}'s Events</h1>

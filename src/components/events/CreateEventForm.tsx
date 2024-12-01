@@ -62,15 +62,15 @@ export function CreateEventForm() {
     try {
       const response = await createEvent(formData);
       console.log(response);
-      
+
       notify({
         message: "Event created successfully",
         type: "success",
       });
       navigate("/dashboard");
-    } catch (error) {
+    } catch (error: any) {
       notify({
-        message: "Failed to create event. Please try again.",
+        message: error.message || "Failed to create event. Please try again.",
         type: "error",
       });
     } finally {
@@ -84,8 +84,9 @@ export function CreateEventForm() {
         <Label htmlFor="title">Title</Label>
         <Input
           id="title"
+          placeholder="Event Title"
           {...register("title", { required: "Title is required" })}
-          className="w-full px-3 py-2 text-white bg-white/60 dark:bg-gray-700/60 border border-white rounded-lg focus:outline-non"
+          className="w-full px-3 py-2 text-white bg-white/60 dark:bg-gray-700/60 border border-gray-400  dark:border-gray-600 rounded-lg focus:outline-non"
         />
         {errors.title && (
           <p className="text-red-500 text-sm">{errors.title.message}</p>
@@ -95,9 +96,10 @@ export function CreateEventForm() {
       <div>
         <Label htmlFor="description">Description</Label>
         <textarea
+        placeholder="Event Description"
           id="description"
           {...register("description", { required: "Description is required" })}
-          className="w-full px-3 py-2 text-white bg-white/60 dark:bg-black/60 border rounded-lg focus:outline-none"
+          className="w-full px-3 py-2 text-white bg-white/60 dark:bg-gray-700/60 border border-gray-400  dark:border-gray-600 rounded-lg focus:outline-non"
           rows={4}
         />
         {errors.description && (
@@ -108,6 +110,8 @@ export function CreateEventForm() {
       <div>
         <Label htmlFor="capacity">Capacity</Label>
         <Input
+          placeholder="Event Capacity"
+          className="bg-white/60 dark:bg-gray-700/60 border border-gray-400  dark:border-gray-600 rounded-lg focus:outline-non"
           id="capacity"
           type="number"
           {...register("capacity", {
@@ -123,6 +127,8 @@ export function CreateEventForm() {
       <div>
         <Label htmlFor="location">Location</Label>
         <Input
+          placeholder="Event Location"
+          className="bg-white/60 dark:bg-gray-700/60 border border-gray-400  dark:border-gray-600 rounded-lg focus:outline-non"
           id="location"
           {...register("location", { required: "Location is required" })}
         />
@@ -134,6 +140,7 @@ export function CreateEventForm() {
       <div>
         <Label htmlFor="date">Date</Label>
         <Input
+          className="bg-white/60 dark:bg-gray-700/60 border border-gray-400  dark:border-gray-600 rounded-lg focus:outline-non"
           id="date"
           type="date"
           {...register("date", { required: "Date is required" })}
@@ -146,6 +153,7 @@ export function CreateEventForm() {
       <div>
         <Label htmlFor="banner">Banner Image</Label>
         <Input
+          className="bg-white/60 dark:bg-gray-700/60 border border-gray-400  dark:border-gray-600 rounded-lg focus:outline-non"
           id="banner"
           type="file"
           accept="image/*"

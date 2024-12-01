@@ -17,7 +17,7 @@ interface TableHeaderProps {
 
 export function TableHeader({ columns, sortConfig, onSort }: TableHeaderProps) {
   return (
-    <thead className="backdrop-filter backdrop-blur-xl bg-primary text-white  rounded-xl rounded-b-0 border-b-0 max-h-[90%]">
+    <thead className="backdrop-filter backdrop-blur-xl bg-primary text-white rounded-xl rounded-b-0 border-b-0 max-h-[90%]">
       <tr>
         {columns.map((column) => (
           <th
@@ -27,7 +27,7 @@ export function TableHeader({ columns, sortConfig, onSort }: TableHeaderProps) {
           >
             {column.sortable ? (
               <button
-                className="group inline-flex items-center bg-transparent space-x-1 hover:text-primary hover:underline border-none"
+                className="group inline-flex items-center bg-transparent space-x-1 hover:text-black hover:underline border-none"
                 onClick={() => onSort(column.key)}
               >
                 <span>{column.label}</span>

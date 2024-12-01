@@ -161,3 +161,30 @@ export const createEvent = async (eventData: FormData) => {
     throw err;
   }
 }
+
+export const updateEvent = async (eventId: string, eventData: FormData) => {
+  try {
+    const response = await apiClient.patch(`/events/update/${eventId}`, eventData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  } catch (err: any) {
+    if (err instanceof AxiosError) {
+      console.error("Axios Error: ", err.response?.data || err.message);
+    } else {
+      console.error("Unknown Error: ", err);
+    }
+    throw err;
+  }
+}
+
+export const deleteEvent = async (eventId: string) => {
+  try {
+    const response = await apiClient.delete(`/events/delete/${eventId}`);
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || 'Failed to delete event');
+  }
+}
