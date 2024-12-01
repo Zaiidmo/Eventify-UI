@@ -1,4 +1,3 @@
-import React from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface SortConfig {
@@ -18,7 +17,7 @@ interface TableHeaderProps {
 
 export function TableHeader({ columns, sortConfig, onSort }: TableHeaderProps) {
   return (
-    <thead className="backdrop-filter backdrop-blur-xl bg-gray-100/60 dark:bg-gray-600/60  rounded-xl rounded-b-0 border-b-0 max-h-[90%]">
+    <thead className="backdrop-filter backdrop-blur-xl bg-primary text-white  rounded-xl rounded-b-0 border-b-0 max-h-[90%]">
       <tr>
         {columns.map((column) => (
           <th

@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { getOrganizerEvents, fetchParticipants } from "@/services/apiClient";
 import jsPDF from "jspdf";
 import { GridLoader } from "react-spinners";
+import { ParticipantsTable } from "./ParticipantsTable";
 
 interface Column<T> {
   key: string;
@@ -18,37 +19,15 @@ export function Table() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [participants, setParticipants] = useState<any[]>([]);
-
-  const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" } | null>(
-    null
-  );
-  
-  const handleSort = (key: string) => {
-    setSortConfig((current) => ({
-      key,
-      direction: current?.key === key && current.direction === "asc" ? "desc" : "asc",
-    }));
-  };
-  
-  // const sortedData = useMemo(() => {
-  //   if (!sortConfig) return events;
-  
-  //   return [...events].sort((a, b) => {
-  //     const aValue = a[sortConfig.key ];
-  //     const bValue = b[sortConfig.key ];
-  
-  //     if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
-  //     if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
-  //     return 0;
-  //   });
-  // }, [events, sortConfig]);
+  const [sortConfig, setSortConfig] = useState<{
+    key: string;
+    direction: "asc" | "desc";
+  } | null>(null);
 
   const fetchEvents = async () => {
     setLoading(true);
     try {
       const data = await getOrganizerEvents();
-      console.log('data', data.data);
-      
       setEvents(data.data);
     } catch (err: any) {
       setError(err.message || "Failed to fetch events");
@@ -60,20 +39,97 @@ export function Table() {
   const fetchEventParticipants = async (eventId: string) => {
     try {
       const data = await fetchParticipants(eventId);
-      console.log('dataOPar', data.data);
       setParticipants(data.data);
     } catch (err: any) {
       setError(err.response?.data?.message || "Failed to fetch participants");
     }
   };
 
-  const downloadParticipants = () => {
+  const downloadParticipants = (eventTitle: string) => {
+    if (participants.length === 0) {
+      alert("No participants available to download.");
+      return;
+    }
+  
     const doc = new jsPDF();
-    doc.text("Participants List", 10, 10);
+    const margin = 20;
+    const pageWidth = doc.internal.pageSize.getWidth();
+  
+    // Title
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
+    doc.text(`Participants List`, pageWidth / 2, margin, { align: "center" });
+  
+    doc.setFontSize(16);
+    doc.text(`Event: ${eventTitle}`, pageWidth / 2, margin + 10, { align: "center" });
+  
+    // Decorative line
+    doc.setDrawColor(0); // Black
+    doc.setLineWidth(0.5);
+    doc.line(margin, margin + 15, pageWidth - margin, margin + 15);
+  
+    // Table Headers
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    const headerY = margin + 25;
+    const rowHeight = 8;
+  
+    doc.setFillColor(230, 230, 230);
+    doc.rect(margin, headerY - 5, pageWidth - margin * 2, rowHeight, "F");
+  
+    doc.text("No.", margin + 5, headerY);
+    doc.text("Username", margin + 20, headerY);
+    doc.text("Email", margin + 90, headerY);
+  
+    // Table Rows
+    doc.setFont("helvetica", "normal");
+    let currentY = headerY + rowHeight;
+  
     participants.forEach((participant, index) => {
-      doc.text(`${index + 1}. ${participant.name} - ${participant.email}`, 10, 20 + index * 10);
+      if (currentY > doc.internal.pageSize.getHeight() - margin) {
+        doc.addPage();
+        currentY = margin;
+        // Redraw headers on a new page
+        doc.setFillColor(230, 230, 230);
+        doc.rect(margin, currentY - 5, pageWidth - margin * 2, rowHeight, "F");
+  
+        doc.text("No.", margin + 5, currentY);
+        doc.text("Username", margin + 20, currentY);
+        doc.text("Email", margin + 90, currentY);
+  
+        currentY += rowHeight;
+      }
+  
+      doc.text(`${index + 1}`, margin + 5, currentY);
+      doc.text(participant.user?.username || "N/A", margin + 20, currentY);
+      doc.text(participant.user?.email || "N/A", margin + 90, currentY);
+  
+      currentY += rowHeight;
     });
-    doc.save("participants.pdf");
+  
+    // Footer
+    const footerY = doc.internal.pageSize.getHeight() - margin;
+    doc.setFontSize(10);
+    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, margin, footerY);
+    // doc.text(
+    //   `Page ${doc.internal.getCurrentPageInfo().pageNumber}`,
+    //   pageWidth - margin,
+    //   footerY,
+    //   { align: "right" }
+    // );
+  
+    // Save File
+    const sanitizedTitle = eventTitle.replace(/[^a-z0-9]/gi, "_").toLowerCase();
+    doc.save(`${sanitizedTitle}_participants.pdf`);
+  };
+  
+
+  const handleSort = (key: string) => {
+    setSortConfig((current) => ({
+      key,
+      direction:
+        current?.key === key && current.direction === "asc" ? "desc" : "asc",
+    }));
   };
 
   useEffect(() => {
@@ -83,7 +139,7 @@ export function Table() {
   const columns: Column<any>[] = [
     { key: "title", label: "Event Title" },
     { key: "date", label: "Date" },
-    { key: "location", label: "Location" },
+    { key: "capacity", label: "Capacity Left" },
   ];
 
   if (loading) {
@@ -92,26 +148,32 @@ export function Table() {
         <GridLoader color="#d64218" size={10} />
       </div>
     );
-  }  if (error) return <p className="text-red-500">{error}</p>;
+  }
+
+  if (error) return <p className="text-red-500">{error}</p>;
 
   return (
     <div className="shadow w-full mb-16">
       <div className="overflow-x-auto rounded-xl">
-        <table className="min-w-full rounded-xl divide-y divide-gray-300">
-          <TableHeader columns={columns} sortConfig={sortConfig} onSort={handleSort} />
-          <tbody className="divide-y divide-gray-200 bg-white">
+        <table className="min-w-full rounded-xl divide-y text-black divide-gray-300">
+          <TableHeader
+            columns={columns}
+            sortConfig={sortConfig}
+            onSort={handleSort}
+          />
+          <tbody className="divide-y divide-gray-200  bg-gray-100/60 dark:bg-gray-600/60">
             {events.map((event) => (
               <GlassModal
                 key={event._id}
                 trigger={
                   <tr
-                    className="cursor-pointer hover:bg-gray-100"
+                    className="cursor-pointer text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-black hover:bg-gray-100"
                     onClick={() => fetchEventParticipants(event._id)}
                   >
                     {columns.map((column) => (
                       <td
                         key={column.key}
-                        className="whitespace-nowrap px-6 py-4 text-sm text-gray-500"
+                        className="whitespace-nowrap  px-6 py-4 text-sm"
                       >
                         {event[column.key]}
                       </td>
@@ -120,44 +182,21 @@ export function Table() {
                 }
               >
                 <div className="p-6">
-                  <h2 className="text-xl font-bold mb-4">
-                    Participants for {event.name}
+                  <h2 className="text-lg font-medium mb-4">
+                    Event Participants
                   </h2>
-                  {participants.length ? (
-                    <div>
-                      <table className="min-w-full divide-y divide-gray-200 mb-4">
-                        <thead className="bg-gray-50">
-                          <tr>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                              Name
-                            </th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                              Email
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
-                          {participants.map((participant) => (
-                            <tr key={participant.id}>
-                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {participant.name}
-                              </td>
-                              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {participant.email}
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                  {participants.length > 0 ? (
+                    <>
+                      <ParticipantsTable participants={participants} />
                       <Button
-                        onClick={downloadParticipants}
-                        className="bg-blue-500 text-white hover:bg-blue-600"
+                        onClick={() => downloadParticipants(event.title)}
+                        className="mt-4 bg-primary text-white hover:bg-black"
                       >
-                        Download Participants
+                        Download Participants Document
                       </Button>
-                    </div>
+                    </>
                   ) : (
-                    <p className="text-sm text-gray-500">No participants available.</p>
+                    <p className="text-gray-500">No participants found.</p>
                   )}
                 </div>
               </GlassModal>
