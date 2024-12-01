@@ -136,3 +136,12 @@ export const participate = async (eventId: string) => {
   }
 }
 
+export const fetchParticipants = async (eventId: string) => {
+  try {
+    const response = await apiClient.get(`/registrations/events/${eventId}`);
+    return response.data;
+  } catch (error:any) {
+    throw new Error(error.response?.data?.message || 'Failed to fetch participants');
+  }
+}
+
