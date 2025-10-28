@@ -1,6 +1,6 @@
 # Contributing to Eventify UI
 
-We’re thrilled that you want to contribute to **Eventify API** 🎉
+We’re thrilled that you want to contribute to **Eventify UI** 🎉
 
 ## 💡 How to Contribute
 
