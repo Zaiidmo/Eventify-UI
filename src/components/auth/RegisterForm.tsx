@@ -197,9 +197,11 @@ export default function RegisterForm() {
           )}
         />
         <div>
+          <span className="text-sm text-red-600"> This functionality is disabled by the owner .</span>
           <Button
             type="submit"
             className="w-full text-white bg-primary rounded-md"
+            disabled={true}
           >
             Sign Up
           </Button>

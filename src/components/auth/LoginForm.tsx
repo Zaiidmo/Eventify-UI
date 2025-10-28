@@ -205,7 +205,8 @@ export default function LoginForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="text-white w-full">
+                      <span className="text-sm text-red-600"> This functionality is disabled by the owner .</span>
+            <Button type="submit" className="text-white w-full" >
               Log in
             </Button>
           </form>

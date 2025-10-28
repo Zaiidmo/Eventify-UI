@@ -44,9 +44,9 @@ export default function ForgotPassword() {
                 <FormItem>
                   <FormLabel>Email address</FormLabel>
                   <FormControl>
-                    <Input 
-                      placeholder="Enter your email" 
-                      {...field} 
+                    <Input
+                      placeholder="Enter your email"
+                      {...field}
                       className="bg-white/50 dark:bg-gray-800/50 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                     />
                   </FormControl>
@@ -55,15 +55,16 @@ export default function ForgotPassword() {
               )}
             />
             <div>
-              <Button type="submit" className="w-full">
+              <span className="text-sm text-red-600"> This functionality is disabled by the owner .</span>
+              <Button type="submit" className="w-full" disabled={true}>
                 Send Reset Link
               </Button>
             </div>
           </form>
         </Form>
         <div className="mt-4 text-center">
-          <Link 
-            to="/login" 
+          <Link
+            to="/login"
             className="inline-flex items-center text-sm font-medium text-primary hover:text-primary-dark dark:text-primary-light dark:hover:text-primary transition-colors"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
