@@ -1,8 +1,24 @@
 {
-  "name": "vlpha-react-app",
+  "name": "eventify",
   "private": false,
-  "version": "0.0.7",
-  "description": "A script to create a new React project with a custom structure by the Alpha",
+  "version": "1.0.0",
+  "description": "Eventify is a platform to create, manage, and participate in sports events.",
+  "author": {
+    "name": "Zaiid Moumni",
+    "email": "",
+    "url": "https://zaiid.moumni.uk"
+  },
+  "homepage": "https://zaiid.moumni.uk",
+  "license": "MIT",
+  "keywords": [
+    "eventify",
+    "events",
+    "event-management",
+    "sports",
+    "react",
+    "vite",
+    "typescript"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",
