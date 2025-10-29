@@ -70,17 +70,18 @@ export default function Navbar() {
           <div className="flex items-center">
             <a
               href="/"
+              aria-label="Eventify — Home"
               className="text-2xl font-semibold text-gray-800 dark:text-white text-shadow"
             >
               <img
-                src="./logo.png"
+                src="/logo.png"
                 className=" w-24  hidden md:block"
-                alt="Logo"
+                alt="Eventify logo by Zaiid Moumni (TheVlpha)"
               />
               <img
-                src="./favicon.png"
+                src="/favicon.png"
                 className="w-12 block md:hidden"
-                alt="Logo"
+                alt="Eventify favicon"
               />
             </a>
             <div className="hidden md:block">

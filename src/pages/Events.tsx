@@ -4,6 +4,7 @@ import { fetchEvents } from "@/store/slices/eventSlice";
 import { GridLoader } from "react-spinners";
 import { EventCard } from "@/components/events/EventCard";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
+import Seo from "@/components/Seo";
 
 const EventsPage = () => {
   const dispatch = useAppDispatch();
@@ -31,6 +32,11 @@ const EventsPage = () => {
 
   return (
     <div className="w-screen ">
+        <Seo
+          title="Upcoming events — Eventify"
+          description="Browse upcoming events on Eventify by Zaiid Moumni (TheVlpha)."
+          canonicalPath="/events"
+        />
         <div className="w-full my-8 justify-center items-center flex flex-col md:p-8 gap-4 md:gap-8 ">
           <h2 className="text-4xl md:text-6xl text-center w-full font-headers text-gray-800 dark:text-white mb-4">
             Upcoming Events

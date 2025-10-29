@@ -13,13 +13,13 @@ export default function Footer() {
             >
               Eventify™
             </a>
-            . All Rights Reserved.
+            . Built by <a href="https://zaiid.moumni.uk" target="_blank" rel="noopener" className="underline hover:text-primary">Zaiid Moumni (TheVlpha)</a>.
           </span>{" "}
           <div className="w-fit gap-2 flex justify-evenly items-center">
             <a href="https://www.github.com/zaiidmo" target="_blank" className="text-gray-500 dark:text-gray-400 hover:text-primary">
               <Github className="" />
             </a>
-            <a href="https://www.vlpha.tech" target="_blank" className="text-gray-500 dark:text-gray-400 hover:text-primary">
+            <a href="https://zaiid.moumni.uk" target="_blank" className="text-gray-500 dark:text-gray-400 hover:text-primary">
               <Globe className="" />
             </a>
           </div>
