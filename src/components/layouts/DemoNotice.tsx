@@ -53,7 +53,7 @@ return (
             </div>
         </div>
 
-        {/* <div className="mt-5 flex items-center justify-end gap-2">
+        <div className="mt-5 flex items-center justify-end gap-2">
             <button onClick={close}
                 className="rounded-xl border border-zinc-300 px-4 py-2 text-sm hover:bg-zinc-50 dark:border-zinc-700 dark:hover:bg-zinc-800">
                 Got it
@@ -62,13 +62,13 @@ return (
                 className="rounded-xl bg-violet-600 px-4 py-2 text-sm font-medium text-white hover:text-black hover:bg-violet-700 ">
                 Contact Owner </a>
 
-        </div> */}
+        </div>
 
         {/* Close (X) */}
-        <button onClick={close} aria-label="Close"
+        {/* <button onClick={close} aria-label="Close"
             className="absolute right-3 top-3 rounded-full p-2 text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800">
             ✕
-        </button>
+        </button> */}
     </div>
 </div>
 );
