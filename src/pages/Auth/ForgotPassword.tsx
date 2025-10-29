@@ -25,6 +25,7 @@ export default function ForgotPassword() {
 
   function onSubmit(values: z.infer<typeof forgotPasswordSchema>) {
     // Here you would typically send a request to your backend to initiate the password reset process
+    console.log("Forgot Password form submitted with values:", values)
     setIsSubmitted(true)
   }
 

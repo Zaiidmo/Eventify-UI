@@ -21,6 +21,7 @@ export default function ForgotPassword() {
 
   function onSubmit(values: z.infer<typeof forgotPasswordSchema>) {
     // Handle form submission
+    console.log("Forgot Password form submitted with values:", values)
   }
 
   return (

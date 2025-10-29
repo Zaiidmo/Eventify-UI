@@ -60,8 +60,7 @@ export function CreateEventForm() {
     }
 
     try {
-      const response = await createEvent(formData);
-
+      await createEvent(formData);
       notify({
         message: "Event created successfully",
         type: "success",
