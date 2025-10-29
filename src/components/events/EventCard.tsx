@@ -37,7 +37,6 @@ export function EventCard({
   description,
 }: EventCardProps) {
   return (
-    // console.log("EventCardProps: ", _id),
 
     <GlassModal
       trigger={

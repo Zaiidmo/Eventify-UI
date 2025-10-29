@@ -46,7 +46,6 @@ const ParticipateButton: React.FC<ParticipateButtonProps> = ({ eventId }) => {
     const participatedEvents = async () => {
       try {
         const result = await getParticipatedEvents();
-        console.log("API response:", result.data);
         if (result.error) {
           setError(result.error);
           notify({ message: result.error, type: "error" });
@@ -55,7 +54,6 @@ const ParticipateButton: React.FC<ParticipateButtonProps> = ({ eventId }) => {
   
         const events = result.data; 
         if (events.some((event: any) => event._id === eventId)) {
-          console.log("Already registered");
           notify({ message: "You have already registered for this event", type: "info" });
           setIsAlreadyRegistered(true);
         }
@@ -99,7 +97,6 @@ const ParticipateButton: React.FC<ParticipateButtonProps> = ({ eventId }) => {
         return;
       }
       setSuccess(true);
-      console.log("Participate API response:", result.data);
       
       notify({ message: `You successfully registered your participation for this event`, type: "success" });
       setIsAlreadyRegistered(true); // Update immediately

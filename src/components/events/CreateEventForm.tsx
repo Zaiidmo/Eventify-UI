@@ -61,7 +61,6 @@ export function CreateEventForm() {
 
     try {
       const response = await createEvent(formData);
-      console.log(response);
 
       notify({
         message: "Event created successfully",

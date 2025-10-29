@@ -26,7 +26,6 @@ const HeroSection: React.FC = () => {
       try {
         const response = await getLastEvent();
         setEvent(response);
-        // console.log("response: ", response);
         setLoading(false);
       } catch (err) {
         setError("Failed to load the latest event. Please try again.");

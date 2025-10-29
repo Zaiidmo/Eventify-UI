@@ -14,7 +14,6 @@ export interface Event {
 export const fetchEvents = createAsyncThunk("events/upcoming", async () => {
   try {
     const response = await getAllUpcomingEvents();
-    // console.log("API Response:", response);
     return response;
   } catch (error) {
     console.error("Error fetching events:", error);

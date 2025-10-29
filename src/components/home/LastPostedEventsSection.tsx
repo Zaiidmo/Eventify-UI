@@ -25,7 +25,6 @@ interface Event {
         try {
           const response = await getFourcomingEvents();
           setEvents(response);
-          console.log("response: ", response);
           setLoading(false);
         } catch (err) {
           setError("Failed to load popular locations. Please try again.");

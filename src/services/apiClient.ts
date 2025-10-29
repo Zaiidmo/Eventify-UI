@@ -74,7 +74,6 @@ export const getFourcomingEvents = async () => {
       data.push(response.data.data[i]);
     }
 
-    console.log("data: ", data);
 
     return data;
   } catch (err: any) {

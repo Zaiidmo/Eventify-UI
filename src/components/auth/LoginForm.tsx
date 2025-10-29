@@ -73,8 +73,6 @@ export default function LoginForm() {
     try {
       setLoading(true);
       const response = await loginUser(credentials);
-      console.log(response);
-      console.log(credentials);
 
       if (!response || !response.accessToken) {
         setFormStatus({
