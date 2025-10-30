@@ -17,7 +17,7 @@ export function Seo({
 }: SeoProps) {
   useEffect(() => {
     const previousTitle = document.title;
-    document.title = title ? `${title} · Eventify` : "Eventify";
+    document.title = title ? `${title}` : "Eventify";
 
     const ensureMeta = (name: string, attr: "name" | "property" = "name") => {
       let el = document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${name}"]`);
