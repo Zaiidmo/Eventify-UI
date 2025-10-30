@@ -9,7 +9,7 @@ function Home() {
   return (
     <>
       <Seo
-        title="Eventify — Discover and manage events"
+        title="Eventify — Home"
         description="Eventify by Zaiid Moumni (TheVlpha): find, create, and manage events with an elegant experience."
         canonicalPath="/"
         imagePath="/hero.webp"

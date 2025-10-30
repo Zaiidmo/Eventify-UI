@@ -33,7 +33,7 @@ const EventsPage = () => {
   return (
     <div className="w-screen ">
         <Seo
-          title="Upcoming events — Eventify"
+          title="Eventify — Events"
           description="Browse upcoming events on Eventify by Zaiid Moumni (TheVlpha)."
           canonicalPath="/events"
         />
