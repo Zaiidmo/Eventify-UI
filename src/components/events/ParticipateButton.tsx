@@ -12,10 +12,12 @@ interface ParticipateButtonProps {
 const notify = ({
   message = "",
   type = "default",
+  icon = null,
   duration = 6000,
 }: {
   message: string;
   type: "success" | "error" | "loading" | "default" | "info" ;
+  icon?: null | string;
   duration?: number;
 }) => {
   if (type in toast) {
@@ -26,6 +28,7 @@ const notify = ({
   } else {
     toast(message, {
       duration,
+      icon: icon || null,
       position: "bottom-right",
     });
   }
@@ -110,6 +113,10 @@ const ParticipateButton: React.FC<ParticipateButtonProps> = ({ eventId }) => {
       setLoading(false);
     }
   };
+  const disabledParticipationAction = async() => {
+    notify({ message: "All services are currently disabled", type: "error" });
+    notify({ message: `This UI shows preview data only (read-only). For full access, contact the owner.`, type: "info", icon: "⚠️" });
+  }
 
   return isAlreadyRegistered ? (
     <button
@@ -122,8 +129,8 @@ const ParticipateButton: React.FC<ParticipateButtonProps> = ({ eventId }) => {
   ) : (
     <>
       <button
-        onClick={participateInEvent}
-        disabled={true}
+        onClick={disabledParticipationAction} // In order to enable participation, replace with participateInEvent
+        disabled={false}
         className="flex items-center gap-2 px-4 py-3 bg-white text-black rounded hover:bg-white/90 transition tracking-widest"
       >
         <Play className="w-5 h-5" />
