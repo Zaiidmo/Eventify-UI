@@ -1,7 +1,7 @@
 {
   "name": "eventify",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Eventify is a platform to create, manage, and participate in sports events.",
   "author": {
     "name": "Zaiid Moumni",
