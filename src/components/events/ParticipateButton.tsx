@@ -1,4 +1,4 @@
-import { getParticipatedEvents, participate } from "@/services/apiClient";
+import { getParticipatedEvents } from "@/services/apiClient";
 import { Play, StopCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -83,39 +83,47 @@ const ParticipateButton: React.FC<ParticipateButtonProps> = ({ eventId }) => {
     }
   }, [authenticated]);
 
-  const participateInEvent = async () => {
-    if (!authenticated) {
-      setError("Please login to participate in the event");
-      notify({ message: "Please login to participate in the event", type: "error" });
-      return;
-    }
+  /*
+    * To enable participation, uncomment the function below and replace the onClick handler in the button
+    * Also add an import for participate from the apiClient at the top (Alongside with getParticipatedEvents)
+  */
 
-    setLoading(true);
-    setError(null);
-    try {
-      const result = await participate(eventId);
-      if (result.error) {
-        setError(result.error);
-        notify({ message: result.error, type: "error" });
-        return;
-      }
-      setSuccess(true);
+  // const participateInEvent = async () => {
+  //   if (!authenticated) {
+  //     setError("Please login to participate in the event");
+  //     notify({ message: "Please login to participate in the event", type: "error" });
+  //     return;
+  //   }
+
+  //   setLoading(true);
+  //   setError(null);
+  //   try {
+  //     const result = await participate(eventId);
+  //     if (result.error) {
+  //       setError(result.error);
+  //       notify({ message: result.error, type: "error" });
+  //       return;
+  //     }
+  //     setSuccess(true);
       
-      notify({ message: `You successfully registered your participation for this event`, type: "success" });
-      setIsAlreadyRegistered(true); // Update immediately
-    } catch (error: any) {
-      const message =
-        error.response?.data?.message ||
-        error.message ||
-        "Failed to participate in event";
-      setError(message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     notify({ message: `You successfully registered your participation for this event`, type: "success" });
+  //     setIsAlreadyRegistered(true); // Update immediately
+  //   } catch (error: any) {
+  //     const message =
+  //       error.response?.data?.message ||
+  //       error.message ||
+  //       "Failed to participate in event";
+  //     setError(message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
   const disabledParticipationAction = async() => {
+    setLoading(true);
     notify({ message: "All services are currently disabled", type: "error" });
     notify({ message: `This UI shows preview data only (read-only). For full access, contact the owner.`, type: "info", icon: "⚠️" });
+    setLoading(false);
   }
 
   return isAlreadyRegistered ? (
